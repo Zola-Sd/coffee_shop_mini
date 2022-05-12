@@ -3,6 +3,7 @@
 # import file_manager 
 # import os
 import json
+from optparse import Option
 from tkinter.font import BOLD
 
 
@@ -11,16 +12,22 @@ from tkinter.font import BOLD
                           #####READ PRODUCTS AND COURIERS FILES#####
 try:
     with open("products_file.txt","r")as file:
-        product_list=file.read().split()
-        print(f'PROUDUCT LIST\n(){product_list}'+'\n')
+        product_list=file.readlines()
+        print(f'PROUDUCT LIST\n{product_list}'+'\n')
 except Exception as e:
     print('An error occured: ' + str(e))
 try:
     with open("couriers_file.txt", "r") as file:
-        courier_list=file.read().split()
+        courier_list=file.readlines()
         print(f'COURIER LIST\n{courier_list}'+'\n')
 except Exception as e:
     print('An error occured: ' + str(e))
+# try:
+#     with open("order_status.txt","r")as file:
+#         status_list=file.readlines()
+#         print(f'STATUS LIST\n{status_list}'+'\n')
+# except Exception as e:
+#     print('An error occured: ' + str(e))
 
 def save_product():
     try:
@@ -46,6 +53,18 @@ def save_courier():
 
                             #### MAIN MENU ####
 print ("Please select an option\nA / PRODUCTS MENU \nB / COURIERS MENU\nC / ORDERS MENU\nD / SAVE PRODUCTS MENU\nE / SAVE COURIERS MENU")
+orders = {
+        1 : {"NAME" : "Emil",
+    "ADDRESS" : "Unit 2, 12 Main Street, LONDON, WH1 2ER",
+    "PHONE"  : "0789887334",
+    "COURIER" : "Martin",
+    "STATUS" : "preparing"},
+         2 : {"NAME" : "Aisha",
+    "ADDRESS" : "Flat 6, 12 Fontley Street, LONDON, SW1 2EF",
+    "PHONE"  : "0700000000",
+    "COURIER" : "Bob",
+    "STATUS" : "ready"}
+}
 input_cho=input('')
 while True:
     
@@ -257,27 +276,120 @@ while True:
                 if input_option == 'N':
                     save_courier()
                     print('Exit')
-#elif print('back to main menu'):
+
+######### ORDERS INPUT MENU ######################
+
     
     elif input_cho == 'C':
-        orders = {
-        {"customer 1": "John",
-        "customer_address": "Unit 2, 12 Main Street, LONDON, WH1 2ER",
-        "customer_phone": "0789887334",
-        "courier": "Martin",
-        "status": "preparing"},
-        {"customer 2": "Aisha",
-        "customer_address": "Unit 3, 12 fontley Street, LONDON, SN1 2FR",
-        "customer_phone": "0700000000",
-        "courier":"Bob",
-        "status": "preparing"}}
-        print (orders)
+        print ('Please Choose an option:')
+        print("0/Exit\n1/View Orders\n2/Add new Order\n3/Replace an Order\n4/Delete an Order\n5/Assign a Courier")
+        input_option=input('')
+        if input_option == '0':
+            print("Exit")
+# # call order dict
+        elif input_option == '1':
+            def orders_list(): 
+                for o_cust, o_info in orders.items():
+                    print("\norder:", o_cust)
+    
+                    for key in o_info:
+                        print(key + ':', o_info[key])
+            orders_list()
+            print('EXIT')
+        
 
-    elif input_cho == 'D':
-        save_product()
-    elif input_cho == 'E':
-        save_courier()
-        break
-    else:
-        print ("Please select an option\nA / PRODUCTS MENU \nB / COURIERS MENU\nC / SAVE PRODUCTS MENU\nD / SAVE COURIERS MENU")
-        input_cho=input('')
+        elif input_option == '2':
+            new_order = { }
+
+            size = int(input("How many orders you want to creat?: "))
+
+            for i in range(size):
+                dict_name = input("Enter the order number: ")
+
+                new_order[dict_name] = {}
+                Name = input("Enter name: ")
+                address = input("Enter Address: ")
+                phone = input("Enter phone number: ")
+                courier = input("select a courier: ")
+                status = input("What is the status of the order?: ")
+                new_order[dict_name]["Name"] = Name
+                new_order[dict_name]["address"] = address
+                new_order[dict_name]["phone"] = phone
+                new_order[dict_name]["courier"] = courier
+                new_order[dict_name]["status"] = status
+
+            orders [3] = new_order
+            print(orders)
+
+
+# # # delete orders
+        elif input_option == '4':
+            def delete_order():
+                orders_list()
+                print("Select an order to delete")
+                user_input= input('')
+                if user_input == '1':
+                    orders.pop('customer1')
+                    print (orders)  
+                elif user_input == '2':
+                    orders.pop('customer2') 
+                    print (orders)
+            delete_order()
+            orders_list()
+            print('EXIT')
+
+#### ASSIGN COURIERS TO ORDERS ######
+        elif input_option == '5':
+            print('ASSIGN A COURIER')
+            print('Select A courier to Assign')
+            print(courier_list)
+            input_cour = input('')
+            #orders_list()
+            print('Please select an order')
+            order_opt = input('')
+            if order_opt == '1':
+                #input_cour = input('')
+                #if input_cour == '1':
+                orders[1]['COURIER']= courier_list[0]
+                print(orders)
+            elif input_cour == '2':
+                orders[1]['COURIER']= courier_list[1]
+                print(orders) 
+            elif input_cour == '3':
+                orders[1]['COURIER']= courier_list[2]
+                print(orders)
+            elif order_opt == '2':
+                print(courier_list)
+                print('Please Select a Courier' )
+                input_cour = input('')
+                if input_cour == '1':
+                    orders[1]['COURIER']= courier_list[0]
+                    print(orders)
+                elif input_cour == '2':
+                    orders[1]['COURIER']= courier_list[1] 
+                    print(orders)
+                elif input_cour == '3':
+                    orders[1]['COURIER']= courier_list[2]
+                    print(orders)
+                print('EXIT')
+                
+
+
+
+
+
+
+
+
+
+
+# #elif print('back to main menu'):
+    
+#     elif input_cho == 'D':
+#         save_product()
+#     elif input_cho == 'E':
+#         save_courier()
+#         break
+#     else:
+#         print ("Please select an option\nA / PRODUCTS MENU \nB / COURIERS MENU\nC / SAVE PRODUCTS MENU\nD / SAVE COURIERS MENU")
+#         input_cho=input('')
