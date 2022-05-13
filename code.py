@@ -99,6 +99,7 @@ while True:
                 print('\n')
 #### adding new item to the products list        
         elif input_option == '2':
+            
             print ("Add new product")
             print(product_list)
         #print(type(products))
