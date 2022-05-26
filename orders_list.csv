@@ -1,0 +1,4 @@
+order_id,customer_name,customer_address,customer_phone_no,courier_id,order_status,items_id
+1,Tala,Tala place,7888888888,1,Prepared,"1,2"
+2,Hala,2 Hala Road,7266262662,3,Prepared,"4,5,2"
+4,Rachel,Rachel overthere,788181881,3,4,"5,3"
